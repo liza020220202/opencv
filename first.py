@@ -11,5 +11,17 @@ def main():
         print('exit')
 
 
+def webcomcap():
+    capture = cv2.VideoCapture(0)
+
+    if not capture.isOpened():
+        print("blocked")
+        exit()
+
+    while True:
+        ret, frame = capture.read()
+        print(ret)
+
+
 if __name__ == '__main__':
-    main()
+    webcomcap()
