@@ -21,6 +21,12 @@ def webcomcap():
     while True:
         ret, frame = capture.read()
         print(ret)
+        cv2.imshow('webcam', frame)
+        k = cv2.waitKey(0)
+        if k == ord('s'):
+            break
+    capture.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
