@@ -12,22 +12,43 @@ def main():
 
 
 def webcomcap():
-    capture = cv2.VideoCapture(0)
-
-    if not capture.isOpened():
+    if not cap.isOpened():
         print("blocked")
         exit()
 
     while True:
-        ret, frame = capture.read()
-        print(ret)
+        ret, frame = cap.read()
+        if not ret:
+            break
         cv2.imshow('webcam', frame)
         k = cv2.waitKey(0)
         if k == ord('s'):
             break
-    capture.release()
+    cap.release()
+    cv2.destroyAllWindows()
+
+
+def webcam_video():
+    if not cap.isOpened():
+        print("Cannot open camera")
+        exit()
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            print("Can't receive frame (stream end?). Exiting ...")
+            break
+        if cv2.waitKey(1) & 0xFF == 27:
+            break
+        cv2.imshow('frame', frame)
+        out.write(frame)
+    out.release()
+    cap.release()
     cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
-    webcomcap()
+    cap = cv2.VideoCapture(0)
+    codec = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter('captured.wmv', codec, 25.0, (640, 480))
+    webcam_video()
